@@ -1,8 +1,8 @@
 <script lang="ts">
   import CurrentWeather from './lib/components/CurrentWeather.svelte';
+  import AirQuality from './lib/components/AirQuality.svelte';
   
   // Call data
-  let callFailCounter: number = 0;
   const CALL_INTERVAL: number = 600000; // 10 minutes
 
   // Temperature
@@ -63,28 +63,18 @@
   ];
   const language: string = SUPPORTED_LANGS[14];
 
-  try { // One Call Weather API
-    fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&exclude=minutely&units=${UNITS}&lang=${language}&appid=${import.meta.env.VITE_API_KEY}`);
-    // TODO get sample json
-    callFailCounter = 0;
-  } catch {
-    callFailCounter++;
-  }
+  // One Call Weather API
+  // fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&exclude=minutely&units=${UNITS}&lang=${language}&appid=${import.meta.env.VITE_API_KEY}`);
+  fetch(`../json/weather-sample.json`);
 
-  try { // Air Quality
-    fetch(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&appid=${import.meta.env.VITE_API_KEY}`);
-    // get & fetch sample json
-  } catch {
-
-  }
-
-  if (callFailCounter === 6) {
-    console.error(`callFailCounter has reached ${callFailCounter} failed calls (calls occur every ${CALL_INTERVAL} milliseconds)`)
-  } 
+  // Air Quality API
+  // fetch(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&appid=${import.meta.env.VITE_API_KEY}`);
+  fetch(`../json/air-quality-sample.json`);
 </script>
 
 <main>
   <CurrentWeather forecast={"Sunny"} temp={72}/>
+  <AirQuality aqi={2}/>
 </main>
 
 <style>

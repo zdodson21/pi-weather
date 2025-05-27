@@ -28,12 +28,6 @@
          }
       ]
    },
-   "minutely":[
-      {
-         "dt":1684929540,
-         "precipitation":0
-      }
-   ],
    "hourly":[
       {
          "dt":1684926000,
