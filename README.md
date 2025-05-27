@@ -1,6 +1,6 @@
 # Pi Weather
 
-Pi Weather is a Svelte-based web application for displaying weather information. Handy for creating an at-home weather dashboard.
+Pi Weather is a Svelte-based web application for displaying weather information, handy for creating a home-made weather dashboard. This project relies on [Open Weather APIs](https://openweathermap.org/city/2643743).
 
 ## Setup
 
