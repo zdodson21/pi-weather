@@ -66,26 +66,14 @@
   ];
   const language: string = SUPPORTED_LANGS[14];
 
-  let oneCallAPI: string;
-  if (DEV_MODE) {
-    oneCallAPI = `./json/weather-sample.json`;
-  } else {
-    oneCallAPI = `https://api.openweathermap.org/data/3.0/onecall?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&exclude=minutely&units=${UNITS}&lang=${language}&appid=${import.meta.env.VITE_API_KEY}`
-  }
+  let oneCallAPI: string = `./json/weather-sample.json`;
+  if (!DEV_MODE) oneCallAPI = `https://api.openweathermap.org/data/3.0/onecall?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&exclude=minutely&units=${UNITS}&lang=${language}&appid=${import.meta.env.VITE_API_KEY}`;
 
-  let airQualityAPI: string;
-  if (DEV_MODE) {
-    airQualityAPI = `./json/air-quality-sample.json`;
-  } else {
-    airQualityAPI = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&appid=${import.meta.env.VITE_API_KEY}`
-  }
+  let airQualityAPI: string = `./json/air-quality-sample.json`;
+  if (!DEV_MODE) airQualityAPI = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&appid=${import.meta.env.VITE_API_KEY}`;
 
-  let geocodeAPI: string;
-  if (DEV_MODE) {
-    geocodeAPI = `./json/geocode-sample.json`;
-  } else {
-    geocodeAPI = `http://api.openweathermap.org/geo/1.0/reverse?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&limit=1&appid=${import.meta.env.VITE_API_KEY}`
-  }
+  let geocodeAPI: string = `./json/geocode-sample.json`
+  if (!DEV_MODE) geocodeAPI = `http://api.openweathermap.org/geo/1.0/reverse?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&limit=1&appid=${import.meta.env.VITE_API_KEY}`;
 
   // Response Values
   let sunRise: number;
@@ -165,13 +153,13 @@
   {#await dataPromise}
     <div class="loading">Loading weather data...</div>
   {:then data} 
-    {#if DEV_MODE}
-      <div class="dev-mode-message">
-        <p>Notice: Developer mode is enabled</p>
-      </div>
-    {/if}
-
     <div class="top">
+      {#if DEV_MODE}
+        <div class="dev-mode-message">
+          <p>Notice: Developer mode is enabled</p>
+        </div>
+      {/if}
+      
       <Location name={location.name} state={location.state}/>
     </div>
 
