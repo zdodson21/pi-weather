@@ -1,4 +1,6 @@
 <script lang="ts">
+  import ExtraInfo from "./ExtraInfo.svelte";
+  
   export let aqi: number = 0;
 
   let airQuality: string;
@@ -24,6 +26,8 @@
   }
 </script>
 
-<div class="air-quality">
-  <p>Air Quality: {airQuality}</p>
-</div>
+<ExtraInfo>
+  <div class="air-quality">
+    <p>Air Quality: {airQuality}</p>
+  </div>
+</ExtraInfo>

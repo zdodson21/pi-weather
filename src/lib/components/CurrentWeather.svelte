@@ -1,6 +1,7 @@
 <script lang="ts">
   export let temp: number = 0;
   export let icon: string = '01d';
+  export let tempUnits: string = 'standard';
 
   let altText = 'Alt Text'
   switch (icon) {
@@ -61,15 +62,32 @@
     default:
       altText = 'No icon';
   }
+
+  let unit: string;
+  switch (tempUnits) {
+    case 'standard':
+      unit = 'K';
+      break;
+    case 'metric':
+      unit = 'C';
+      break;
+    case 'imperial':
+      unit = 'F';
+      break;
+    default:
+      unit = 'K';
+  }
 </script>
 
 <div class="weather">
-  <div class="left">
-    <img src="./assets/icons/{icon}.png" alt="{altText}">
-  </div>
-
-  <div class="right">
-    <p>Temperature: {temp}</p>
+  <div class="top">
+    <div class="left">
+      <img src="./assets/icons/{icon}.png" alt="{altText}">
+    </div>
+  
+    <div class="right">
+      <p>{temp}&#176; {unit}</p>
+    </div>
   </div>
 
   <div class="bottom">
@@ -78,3 +96,15 @@
     </slot>
   </div>
 </div>
+
+<style>
+  .top {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .bottom {
+    text-align: center;
+  }
+</style>

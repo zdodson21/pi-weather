@@ -8,9 +8,6 @@
   
   const DEV_MODE: boolean = true;
 
-  // TODO might not be needed
-  const CALL_INTERVAL: number = 600000; // 10 minutes
-
   // Temperature
   const TEMP_UNITS: string[] = ["standard", "metric", "imperial"];
   const UNITS: string = TEMP_UNITS[2];
@@ -71,21 +68,21 @@
 
   let oneCallAPI: string;
   if (DEV_MODE) {
-    oneCallAPI = `../json/weather-sample.json`;
+    oneCallAPI = `./json/weather-sample.json`;
   } else {
     oneCallAPI = `https://api.openweathermap.org/data/3.0/onecall?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&exclude=minutely&units=${UNITS}&lang=${language}&appid=${import.meta.env.VITE_API_KEY}`
   }
 
   let airQualityAPI: string;
   if (DEV_MODE) {
-    airQualityAPI = `../json/air-quality-sample.json`;
+    airQualityAPI = `./json/air-quality-sample.json`;
   } else {
     airQualityAPI = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&appid=${import.meta.env.VITE_API_KEY}`
   }
 
   let geocodeAPI: string;
   if (DEV_MODE) {
-    geocodeAPI = `../json/geocode-sample.json`;
+    geocodeAPI = `./json/geocode-sample.json`;
   } else {
     geocodeAPI = `http://api.openweathermap.org/geo/1.0/reverse?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&limit=1&appid=${import.meta.env.VITE_API_KEY}`
   }
@@ -133,11 +130,9 @@
       currWeather = {
         id: WEATHER_VALUE_PATH.id,
         forecast: WEATHER_VALUE_PATH.main,
-        description: WEATHER_VALUE_PATH.description,
+        description: WEATHER_VALUE_PATH.description.charAt(0).toUpperCase() + WEATHER_VALUE_PATH.description.slice(1),
         icon: WEATHER_VALUE_PATH.icon
       }
-
-      // TODO upper case first letter of description
 
       if (DEV_MODE) console.table(currWeather);
     }),
@@ -176,18 +171,40 @@
       </div>
     {/if}
 
-    <Location name={location.name} state={location.state}/>
+    <div class="top">
+      <Location name={location.name} state={location.state}/>
+    </div>
 
-    <CurrentWeather temp={currTemp} icon={currWeather.icon}>
-      <p>{currWeather.description}</p>
-    </CurrentWeather>
+    <div class="middle">
+      <div class="left-side">
+        <CurrentWeather temp={currTemp} icon={currWeather.icon} tempUnits={UNITS}>
+          <p>{currWeather.description}</p>
+        </CurrentWeather>
+      </div>
+      
+      <div class="right-side">
+        <AirQuality aqi={airQualityIndex}/>
+      </div>
+    </div>
 
-    <AirQuality aqi={airQualityIndex}/>
   {:catch error}
     <div class="error">Error loading weather data: {error.message}</div>
   {/await}
 </main>
 
 <style>
-  
+  .dev-mode-message {
+    background-color: red;
+    color: white;
+    text-align: center;
+  }
+
+  .top {
+    text-align: center;
+  }
+
+  .middle {
+    display: flex;
+    justify-content: center;
+  }
 </style>
