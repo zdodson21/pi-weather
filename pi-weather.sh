@@ -7,7 +7,7 @@ npm run dev &
 sleep 3
 
 # Launch Chromium in fullscreen
-chromium --start-fullscreen http://localhost:5173
+chromium --headless --screenshot=piweather.png --window-size="1280,720" --disable-gpu --no-sandbox http://localhost:5173
 
 # Cleanup
 echo "Cleaning up processes..."
