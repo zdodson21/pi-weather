@@ -136,6 +136,9 @@
         description: WEATHER_VALUE_PATH.description,
         icon: WEATHER_VALUE_PATH.icon
       }
+
+      // TODO upper case first letter of description
+
       if (DEV_MODE) console.table(currWeather);
     }),
 
@@ -174,7 +177,11 @@
     {/if}
 
     <Location name={location.name} state={location.state}/>
-    <CurrentWeather forecast={"Sunny"} temp={72}/>
+
+    <CurrentWeather temp={currTemp} icon={currWeather.icon}>
+      <p>{currWeather.description}</p>
+    </CurrentWeather>
+
     <AirQuality aqi={airQualityIndex}/>
   {:catch error}
     <div class="error">Error loading weather data: {error.message}</div>
