@@ -6,7 +6,7 @@ npm run dev &
 # Wait for server to be ready
 sleep 3
 
-# Launch Chromium in fullscreen
+# Get screenshot from chromium
 chromium --headless --screenshot=piweather.png --window-size="1280,720" --disable-gpu --no-sandbox http://localhost:5173
 
 # Cleanup
