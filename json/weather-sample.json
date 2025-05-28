@@ -96,7 +96,7 @@
          "uvi":9.23
       }
    ],
-    "alerts": [
+   "alerts": [
     {
       "sender_name": "NWS Philadelphia - Mount Holly (New Jersey, Delaware, Southeastern Pennsylvania)",
       "event": "Small Craft Advisory",
