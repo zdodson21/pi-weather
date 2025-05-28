@@ -20,7 +20,7 @@ To install project dependencies, run `npm install` in the root of this project.
 
 ## Environment Variables
 
-Provided here is all of the environment variables used throughout the project. You will need to provide your own values for these variables:
+Provided here is all of the environment variables used throughout the project. You will need to provide your own values for these variables in a `.env` file in the root directory of this project:
 
 ```env
 VITE_API_KEY

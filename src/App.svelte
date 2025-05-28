@@ -1,7 +1,12 @@
 <script lang="ts">
   import CurrentWeather from './lib/components/CurrentWeather.svelte';
   import AirQuality from './lib/components/AirQuality.svelte';
+  import type { Weather } from './lib/types/Weather';
+  import type { Wind } from './lib/types/Wind';
   
+  const DEV_MODE: boolean = true;
+
+  // TODO might not be needed
   // Call data
   const CALL_INTERVAL: number = 600000; // 10 minutes
 
@@ -63,18 +68,58 @@
   ];
   const language: string = SUPPORTED_LANGS[14];
 
-  // One Call Weather API
-  // fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&exclude=minutely&units=${UNITS}&lang=${language}&appid=${import.meta.env.VITE_API_KEY}`);
-  fetch(`../json/weather-sample.json`);
+  let oneCallAPI: string;
+  if (DEV_MODE) {
+    oneCallAPI = `../json/weather-sample.json`
+  } else {
+    oneCallAPI = `https://api.openweathermap.org/data/3.0/onecall?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&exclude=minutely&units=${UNITS}&lang=${language}&appid=${import.meta.env.VITE_API_KEY}`
+  }
 
-  // Air Quality API
-  // fetch(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&appid=${import.meta.env.VITE_API_KEY}`);
-  fetch(`../json/air-quality-sample.json`);
+  let airQualityAPI: string;
+  if (DEV_MODE) {
+    airQualityAPI = `../json/air-quality-sample.json`
+  } else {
+    airQualityAPI = `http://api.openweathermap.org/data/2.5/air_pollution?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&appid=${import.meta.env.VITE_API_KEY}`
+  }
+
+  // Response Values
+  let airQualityIndex: number;
+  let sunRise: number;
+  let sunSet: number;
+  let currTemp: number;
+  let pressue: number;
+  let humidity: number;
+  let clouds: number;
+  let visibility: number;
+  let wind: Wind;
+  let currWeather: Weather;
+
+  const dataPromise = Promise.all ([
+    fetch(oneCallAPI)
+    .then(d => d.ok ? d.json(): null)
+    .then(data => {
+      console.log(data);
+    }),
+
+    fetch(airQualityAPI)
+    .then(d => d.ok ? d.json(): null)
+    .then(data => {
+      console.log(data);
+      
+      airQualityIndex = data.list[0].main.aqi;
+    }),
+  ])
 </script>
 
 <main>
-  <CurrentWeather forecast={"Sunny"} temp={72}/>
-  <AirQuality aqi={2}/>
+  {#await dataPromise}
+    <div class="loading">Loading weather data...</div>
+  {:then data} 
+    <CurrentWeather forecast={"Sunny"} temp={72}/>
+    <AirQuality aqi={airQualityIndex}/>
+  {:catch error}
+    <div class="error">Error loading weather data: {error.message}</div>
+  {/await}
 </main>
 
 <style>
