@@ -2,10 +2,15 @@
   import AirQuality from './lib/components/AirQuality.svelte';
   import CurrentWeather from './lib/components/CurrentWeather.svelte';
   import Location from './lib/components/Location.svelte';
+  import SunData from './lib/components/SunData.svelte';
   import type { Geocode } from './lib/types/Geocode';
+  import type { Sun } from './lib/types/Sun';
   import type { Weather } from './lib/types/Weather';
   import type { Wind } from './lib/types/Wind';
   
+  /**
+   * @description Flip to true when modifying code to test changes without making calls to OneWeather API & use other browser developer features.
+  */
   const DEV_MODE: boolean = true;
 
   // Temperature
@@ -76,8 +81,7 @@
   if (!DEV_MODE) geocodeAPI = `http://api.openweathermap.org/geo/1.0/reverse?lat=${import.meta.env.VITE_LATITUDE}&lon=${import.meta.env.VITE_LONGITUDE}&limit=1&appid=${import.meta.env.VITE_API_KEY}`;
 
   // Response Values
-  let sunRise: number;
-  let sunSet: number;
+  let sun: Sun;
   let currTemp: number;
   let pressure: number;
   let humidity: number;
@@ -93,13 +97,13 @@
   let location: Geocode;
 
   const dataPromise = Promise.all ([
-    fetch(oneCallAPI)
-    .then(d => d.ok ? d.json(): null)
-    .then(data => {
+    fetch(oneCallAPI).then(d => d.ok ? d.json(): null).then(data => {
       if (DEV_MODE) console.log(data);
 
-      sunRise = data.current.sunrise;
-      sunSet = data.current.sunSet;
+      sun = {
+        rise: data.current.sunrise,
+        set: data.current.sunset
+      }
       currTemp = data.current.temp;
       pressure = data.current.pressure;
       humidity = data.current.humidity;
@@ -125,17 +129,13 @@
       if (DEV_MODE) console.table(currWeather);
     }),
 
-    fetch(airQualityAPI)
-    .then(d => d.ok ? d.json(): null)
-    .then(data => {
+    fetch(airQualityAPI).then(d => d.ok ? d.json(): null).then(data => {
       console.log(data);
 
       airQualityIndex = data.list[0].main.aqi;
     }),
 
-    fetch(geocodeAPI)
-    .then(d => d.ok ? d.json(): null)
-    .then(data => {
+    fetch(geocodeAPI).then(d => d.ok ? d.json(): null).then(data => {
       console.log(data);
 
       location = {
@@ -172,6 +172,7 @@
       
       <div class="right-side">
         <AirQuality aqi={airQualityIndex}/>
+        <SunData unixSunRise={sun.rise} unixSunSet={sun.set} twelveHourTime/>
       </div>
     </div>
 
