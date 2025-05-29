@@ -1,6 +1,5 @@
 <script lang="ts">
-  import ExtraInfo from "./ExtraInfo.svelte";
-  
+  import DataBlock from '../templates/DataBlock.svelte'
   export let aqi: number = 0;
 
   let airQuality: string;
@@ -26,8 +25,6 @@
   }
 </script>
 
-<ExtraInfo>
-  <div class="air-quality">
-    <p>Air Quality: {airQuality}</p>
-  </div>
-</ExtraInfo>
+<DataBlock icon="./assets/icons/50d.png" iconAlt="air icon" title="Air Quality">
+  {airQuality}
+</DataBlock>

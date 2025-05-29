@@ -1,5 +1,5 @@
 export type Wind = {
-  windSpeed: number;
-  windDeg: number;
-  windGust: number;
+  speed: number;
+  deg: number;
+  gust: number;
 }

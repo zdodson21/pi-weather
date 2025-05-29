@@ -1,8 +1,13 @@
 <script lang="ts">
   import AirQuality from './lib/components/AirQuality.svelte';
   import CurrentWeather from './lib/components/CurrentWeather.svelte';
+  import Humidity from './lib/components/Humidity.svelte';
   import Location from './lib/components/Location.svelte';
+  import Pressure from './lib/components/Pressure.svelte';
   import SunData from './lib/components/SunData.svelte';
+  import UVindex from './lib/components/UVindex.svelte';
+  import Visibility from './lib/components/Visibility.svelte';
+  import WindSpeed from './lib/components/WindSpeed.svelte';
   import type { Geocode } from './lib/types/Geocode';
   import type { Sun } from './lib/types/Sun';
   import type { Weather } from './lib/types/Weather';
@@ -112,9 +117,9 @@
       clouds = data.current.clouds;
       visibility = data.current.visibility;
       wind = {
-        windSpeed: data.current.wind_speed,
-        windDeg: data.current.wind_deg,
-        windGust: data.current.wind_gust
+        speed: data.current.wind_speed,
+        deg: data.current.wind_deg,
+        gust: data.current.wind_gust
       }
       if (DEV_MODE) console.table(wind)
       
@@ -164,6 +169,7 @@
     </div>
 
     <div class="middle">
+      <!-- TODO ensure all of these components are completed before moving on to hourly and daily -->
       <div class="left-side">
         <CurrentWeather temp={currTemp} icon={currWeather.icon} tempUnits={UNITS}>
           <p>{currWeather.description}</p>
@@ -171,8 +177,14 @@
       </div>
       
       <div class="right-side">
+        <SunData icon="./assets/icons/01d.png" iconAlt="sun rise icon" title="Sunrise" unixTimeValue={sun.rise} twelveHourTime/>
+        <SunData icon="./assets/icons/01d.png" iconAlt="sun set icon" title="Sunset" unixTimeValue={sun.set} twelveHourTime/>
+        <WindSpeed windSpeed={wind.speed} units={UNITS}/>
+        <Pressure pressure={pressure} />
+        <Humidity humidity={humidity} />
+        <UVindex uvi={uvi}/>
+        <Visibility visibility={visibility}/>
         <AirQuality aqi={airQualityIndex}/>
-        <SunData unixSunRise={sun.rise} unixSunSet={sun.set} twelveHourTime/>
       </div>
     </div>
 

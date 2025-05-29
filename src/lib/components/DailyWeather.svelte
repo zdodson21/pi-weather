@@ -1,1 +1,0 @@
-<!-- TODO format for daily weather, will be array mapped in App.svelte for 5 days worth -->

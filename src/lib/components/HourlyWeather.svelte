@@ -1,1 +1,0 @@
-<!-- TODO use chart.js to create chart detailing hourly weather -->
