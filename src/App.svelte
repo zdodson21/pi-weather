@@ -1,7 +1,7 @@
 <script lang="ts">
   import AirQuality from './lib/components/AirQuality.svelte';
   import CurrentWeather from './lib/components/CurrentWeather.svelte';
-  import Hourly from './lib/components/Hourly.svelte';
+  import HourlyData from './lib/components/HourlyData.svelte';
   import Humidity from './lib/components/Humidity.svelte';
   import Location from './lib/components/Location.svelte';
   import Pressure from './lib/components/Pressure.svelte';
@@ -10,6 +10,7 @@
   import Visibility from './lib/components/Visibility.svelte';
   import WindSpeed from './lib/components/WindSpeed.svelte';
   import type { Geocode } from './lib/types/Geocode';
+  import type { Hourly } from './lib/types/Hourly';
   import type { Sun } from './lib/types/Sun';
   import type { Weather } from './lib/types/Weather';
   import type { Wind } from './lib/types/Wind';
@@ -95,8 +96,10 @@
   let uvi: number;
   let clouds: number;
   let visibility: number;
-  export let wind: Wind;
+  let wind: Wind;
+
   let currWeather: Weather;
+  let hourly: Hourly = [];
   
   let airQualityIndex: number;
   
@@ -133,16 +136,26 @@
       }
 
       if (DEV_MODE) console.table(currWeather);
+
+      for (let i = 1; i < 13; i++) { // hourly is undefined???
+        hourly.push({
+          time: data.hourly[i].dt,
+          halfOfDay: 'AM',
+          precipitation: data.hourly[i].pop,
+          temp: data.hourly[i].temp
+        })
+      }
+      if (DEV_MODE) console.table(hourly);
     }),
 
     fetch(airQualityAPI).then(d => d.ok ? d.json(): null).then(data => {
-      console.log(data);
+      if (DEV_MODE) console.log(data);
 
       airQualityIndex = data.list[0].main.aqi;
     }),
 
     fetch(geocodeAPI).then(d => d.ok ? d.json(): null).then(data => {
-      console.log(data);
+      if (DEV_MODE) console.log(data);
 
       location = {
         name: data[0].name,
@@ -150,7 +163,7 @@
         state: data[0].state
       }
 
-      console.table(location)
+      if (DEV_MODE) console.table(location)
     }),
   ])
 </script>
@@ -189,7 +202,7 @@
       </div>
     </div>
 
-    <Hourly />
+    <HourlyData hourlyData={hourly} twelveHourTime/>
 
   {:catch error}
     <div class="error">Error loading weather data: {error.message}</div>

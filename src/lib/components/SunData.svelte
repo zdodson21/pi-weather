@@ -8,7 +8,7 @@
   export let twelveHourTime: boolean = false;
 
   // Convert sunRise & sunSet from unix date time to a readable format
-  const CONVERTED_TIME = new Date(unixTimeValue * 1000);
+  const CONVERTED_TIME: Date = new Date(unixTimeValue * 1000);
 
   let halfOfDay: string = 'AM';
   let hour: number = CONVERTED_TIME.getHours();
