@@ -5,5 +5,5 @@
 </script>
 
 <DataBlock icon="./assets/icons/50d.png" iconAlt="humidity icon" title="Humidity">
-  {humidity}%
+  {humidity} %
 </DataBlock>
