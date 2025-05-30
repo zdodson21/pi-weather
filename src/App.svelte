@@ -1,6 +1,7 @@
 <script lang="ts">
   import AirQuality from './lib/components/AirQuality.svelte';
   import CurrentWeather from './lib/components/CurrentWeather.svelte';
+  import Hourly from './lib/components/Hourly.svelte';
   import Humidity from './lib/components/Humidity.svelte';
   import Location from './lib/components/Location.svelte';
   import Pressure from './lib/components/Pressure.svelte';
@@ -94,7 +95,7 @@
   let uvi: number;
   let clouds: number;
   let visibility: number;
-  let wind: Wind;
+  export let wind: Wind;
   let currWeather: Weather;
   
   let airQualityIndex: number;
@@ -187,6 +188,8 @@
         <AirQuality aqi={airQualityIndex}/>
       </div>
     </div>
+
+    <Hourly />
 
   {:catch error}
     <div class="error">Error loading weather data: {error.message}</div>
