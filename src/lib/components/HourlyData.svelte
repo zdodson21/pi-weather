@@ -6,6 +6,12 @@
   export let hourlyData: Hourly = [];
   export let twelveHourTime: boolean = false;
 
+  let chartData;
+  let chartValues = [];
+  let chartLabels = [];
+  let ctx;
+  let chartCanvas;
+
   hourlyData.forEach(object => {
     // ! Time
     const CONVERTED_TIME: Date = new Date(object.time * 1000);
@@ -25,28 +31,27 @@
 
     // ! Probability of Precipitation
     object.precipitation = object.precipitation * 100;
-
+    chartValues.push(object.precipitation);
+    if (twelveHourTime) {
+      chartLabels.push(`${object.time} ${object.halfOfDay}`)
+    } else {
+      chartLabels.push(`${object.time}:00`);
+    }
   });
 
-  let chartData;
-  let chartValues = [20, 10, 5, 2, 20, 30, 45];
-  let chartLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-  let ctx;
-  let chartCanvas;
-
   onMount(async (promise) => {
-      ctx = chartCanvas.getContext('2d');
-      let chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: chartLabels,
-            datasets: [{
-                label: 'Revenue',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: chartValues
-            }]
-        }
+    ctx = chartCanvas.getContext('2d');
+    let chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: chartLabels,
+          datasets: [{
+              label: "Rain",
+              backgroundColor: 'rgb(255, 99, 132)',
+              borderColor: 'rgb(255, 99, 132)',
+              data: chartValues
+          }]
+      }
     });
   });
 
