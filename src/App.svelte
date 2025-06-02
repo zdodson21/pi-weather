@@ -18,7 +18,7 @@
   import type { Wind } from './lib/types/Wind';
   
   /**
-   * @description Flip to true when modifying code to test changes without making calls to OneWeather API & use other browser developer features.
+   * @description true by default to prevent repeated calling to API when developing. Switch to false for production
   */
   const DEV_MODE: boolean = true;
 
