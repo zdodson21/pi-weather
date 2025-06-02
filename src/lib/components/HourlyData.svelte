@@ -123,8 +123,6 @@
       }
     });
   });
-
-  console.table(hourlyData);
 </script>
 
 <div class="chart-container">

@@ -70,11 +70,11 @@
     "sr", // 39: Serbian
     "sk", // 40: Slovak
     "sl", // 41: Slovenian
-    "sp, es", // 42: Spanish
-    "sv, se", // 43: Swedish
+    "sp", // 42: Spanish
+    "se", // 43: Swedish
     "th", // 44: Thai
     "tr", // 45: Turkish
-    "ua, uk", // 46: Ukranian
+    "uk", // 46: Ukranian
     "vi", // 47: Vietnamese
     "zu", // 48: Zulu
   ];
@@ -116,7 +116,7 @@
         rise: data.current.sunrise,
         set: data.current.sunset
       }
-      currTemp = data.current.temp;
+      currTemp = Number(data.current.temp).toFixed(1);
       pressure = data.current.pressure;
       humidity = data.current.humidity;
       dewPoint = data.current.dew_point;

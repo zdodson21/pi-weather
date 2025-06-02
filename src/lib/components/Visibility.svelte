@@ -4,7 +4,6 @@
   export let visibility: number = 0;
 
   visibility = Number(visibility * 0.001).toFixed(2);
-  console.log(visibility)
   
   let symbol: string;
 
