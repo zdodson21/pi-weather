@@ -118,7 +118,8 @@
               }
             }
           }
-        }
+        },
+        maintainAspectRatio: false,
       }
     });
   });
@@ -126,4 +127,6 @@
   console.table(hourlyData);
 </script>
 
-<canvas bind:this={chartCanvas} id="myChart"></canvas>
+<div class="chart-container">
+  <canvas bind:this={chartCanvas} id="myChart"></canvas>
+</div>

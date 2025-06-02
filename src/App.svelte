@@ -181,22 +181,22 @@
   ])
 </script>
 
+{#if DEV_MODE}
+  <div class="dev-mode-message">
+    <p>Notice: Developer mode is enabled</p>
+  </div>
+{/if}
+
 <main>
   {#await dataPromise}
     <div class="loading">Loading weather data...</div>
   {:then data} 
     <div class="top">
-      {#if DEV_MODE}
-        <div class="dev-mode-message">
-          <p>Notice: Developer mode is enabled</p>
-        </div>
-      {/if}
       
       <Location name={location.name} state={location.state}/>
     </div>
 
     <div class="middle">
-      <!-- TODO ensure all of these components are completed before moving on to hourly and daily -->
       <div class="left-side">
         <CurrentWeather temp={currTemp} icon={currWeather.icon} tempUnits={UNITS}>
           <p>{currWeather.description}</p>
@@ -204,14 +204,19 @@
       </div>
       
       <div class="right-side">
-        <SunData icon="./assets/icons/01d.png" iconAlt="sun rise icon" title="Sunrise" unixTimeValue={sun.rise} twelveHourTime/>
-        <SunData icon="./assets/icons/01d.png" iconAlt="sun set icon" title="Sunset" unixTimeValue={sun.set} twelveHourTime/>
-        <WindSpeed windSpeed={wind.speed} units={UNITS}/>
-        <Pressure pressure={pressure} />
-        <Humidity humidity={humidity} />
-        <UVindex uvi={uvi}/>
-        <Visibility visibility={visibility}/>
-        <AirQuality aqi={airQualityIndex}/>
+        <div class="column">
+          <SunData icon="./assets/icons/01d.png" iconAlt="sun rise icon" title="Sunrise" unixTimeValue={sun.rise} twelveHourTime/>
+          <WindSpeed windSpeed={wind.speed} units={UNITS}/>
+          <Humidity humidity={humidity} />
+          <Visibility visibility={visibility}/>
+        </div>
+
+        <div class="column">
+          <SunData icon="./assets/icons/01d.png" iconAlt="sun set icon" title="Sunset" unixTimeValue={sun.set} twelveHourTime/>
+          <Pressure pressure={pressure} />
+          <UVindex uvi={uvi}/>
+          <AirQuality aqi={airQualityIndex}/>
+        </div>
       </div>
     </div>
 
@@ -226,9 +231,10 @@
 </main>
 
 <style>
-  /* main {
+  main {
     height: 100vh;
-  } */
+    width: 100vw;
+  }
   
   .dev-mode-message {
     background-color: red;
@@ -238,16 +244,20 @@
 
   .top {
     text-align: center;
-    height: 5%;
   }
 
   .middle {
     display: flex;
     justify-content: center;
-    height: 60%;
   }
 
-  .bottom {
-    height: 35%;
+  .right-side {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .column {
+    display: flex;
+    flex-direction: column;
   }
 </style>
