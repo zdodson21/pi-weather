@@ -2,65 +2,65 @@
   export let temp: number = 0;
   export let icon: string = '01d';
   export let tempUnits: string = 'standard';
+  let iconAlt: string = 'Alt Text';
 
-  let altText = 'Alt Text'
   switch (icon) {
     case '01d':
-      altText = 'day time clear sky icon';
+      iconAlt = 'day time clear sky icon';
       break;
     case '02d':
-      altText = 'day time few clouds icon';
+      iconAlt = 'day time few clouds icon';
       break;
     case '03d':
-      altText = 'day time scattered clouds icon';
+      iconAlt = 'day time scattered clouds icon';
       break;
     case '04d':
-      altText = 'day time break clouds icon';
+      iconAlt = 'day time break clouds icon';
       break;
     case '09d':
-      altText = 'day time shower rain icon';
+      iconAlt = 'day time shower rain icon';
       break;
     case '10d':
-      altText = 'day time rain icon';
+      iconAlt = 'day time rain icon';
       break;
     case '11d':
-      altText = 'day time thunderstorm icon';
+      iconAlt = 'day time thunderstorm icon';
       break;
     case '13d': 
-      altText = 'day time snow icon';
+      iconAlt = 'day time snow icon';
       break;
     case '50d':
-      altText = 'day time mist icon';
+      iconAlt = 'day time mist icon';
       break;
     case '01n':
-      altText = 'night time clear sky icon';
+      iconAlt = 'night time clear sky icon';
       break;
     case '02n':
-      altText = 'night time few clouds icon';
+      iconAlt = 'night time few clouds icon';
       break;
     case '03n':
-      altText = 'night time scattered clouds icon';
+      iconAlt = 'night time scattered clouds icon';
       break;
     case '04n':
-      altText = 'night time break clouds icon';
+      iconAlt = 'night time break clouds icon';
       break;
     case '09n':
-      altText = 'night time shower rain icon';
+      iconAlt = 'night time shower rain icon';
       break;
     case '10n':
-      altText = 'night time rain icon';
+      iconAlt = 'night time rain icon';
       break;
     case '11n':
-      altText = 'night time thunderstorm icon';
+      iconAlt = 'night time thunderstorm icon';
       break;
     case '13n': 
-      altText = 'night time snow icon';
+      iconAlt = 'night time snow icon';
       break;
     case '50n':
-      altText = 'night time mist icon';
+      iconAlt = 'night time mist icon';
       break;
     default:
-      altText = 'No icon';
+      iconAlt = 'No icon';
   }
 
   let unit: string;
@@ -82,7 +82,7 @@
 <div class="weather">
   <div class="top">
     <div class="left">
-      <img src="./assets/icons/{icon}.png" alt="{altText}">
+      <img src="./assets/icons/{icon}.png" alt="{iconAlt}">
     </div>
   
     <div class="right">

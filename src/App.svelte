@@ -1,6 +1,7 @@
 <script lang="ts">
   import AirQuality from './lib/components/AirQuality.svelte';
   import CurrentWeather from './lib/components/CurrentWeather.svelte';
+  import DailyData from './lib/components/DailyData.svelte';
   import HourlyData from './lib/components/HourlyData.svelte';
   import Humidity from './lib/components/Humidity.svelte';
   import Location from './lib/components/Location.svelte';
@@ -9,6 +10,7 @@
   import UVindex from './lib/components/UVindex.svelte';
   import Visibility from './lib/components/Visibility.svelte';
   import WindSpeed from './lib/components/WindSpeed.svelte';
+  import type { Daily } from './lib/types/Daily';
   import type { Geocode } from './lib/types/Geocode';
   import type { Hourly } from './lib/types/Hourly';
   import type { Sun } from './lib/types/Sun';
@@ -100,6 +102,7 @@
 
   let currWeather: Weather;
   let hourly: Hourly = [];
+  let daily: Daily = [];
   
   let airQualityIndex: number;
   
@@ -137,7 +140,7 @@
 
       if (DEV_MODE) console.table(currWeather);
 
-      for (let i = 1; i < 13; i++) { // hourly is undefined???
+      for (let i = 1; i < 13; i++) {
         hourly.push({
           time: data.hourly[i].dt,
           halfOfDay: 'AM',
@@ -146,6 +149,16 @@
         })
       }
       if (DEV_MODE) console.table(hourly);
+
+      for (let i = 1; i < 7; i++) {
+        daily.push({
+          time: data.daily[i].dt,
+          lowTemp: data.daily[i].temp.min,
+          highTemp: data.daily[i].temp.max,
+          weather: data.daily[i].weather[0].icon,
+          precipitation: data.daily[i].pop
+        })
+      }
     }),
 
     fetch(airQualityAPI).then(d => d.ok ? d.json(): null).then(data => {
@@ -204,6 +217,7 @@
 
     <div class="bottom"> 
       <HourlyData hourlyData={hourly} twelveHourTime/>
+      <DailyData dailyData={daily} icon{daily.weather} monthDay/>
     </div>
 
   {:catch error}
