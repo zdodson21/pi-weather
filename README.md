@@ -12,13 +12,9 @@ In GitHub you can either download the code as a `.zip` file or use the `git clon
 
 ### Node & NPM
 
-
-
 ### Project Dependencies
 
 To install project dependencies, run `npm install` in the root of this project.
-
-
 
 ## Environment Variables
 

@@ -3,4 +3,4 @@ export type Weather = {
   forecast: string; // main
   description: string;
   icon: string;
-}
+};

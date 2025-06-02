@@ -159,6 +159,7 @@
           precipitation: data.daily[i].pop
         })
       }
+      if (DEV_MODE) console.table(daily);
     }),
 
     fetch(airQualityAPI).then(d => d.ok ? d.json(): null).then(data => {
@@ -234,6 +235,7 @@
   main {
     height: 100vh;
     width: 100vw;
+    padding: 8px;
   }
   
   .dev-mode-message {

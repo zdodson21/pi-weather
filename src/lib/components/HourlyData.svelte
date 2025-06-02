@@ -1,17 +1,17 @@
 <script lang="ts">
-  import type { Hourly } from "../types/Hourly";
   import Chart from 'chart.js/auto'
+  import type { Hourly } from "../types/Hourly";
   import { onMount } from "svelte";
 
   export let hourlyData: Hourly = [];
   export let twelveHourTime: boolean = false;
 
+  let chartCanvas;
   let chartData;
-  let popValues: Array<number> = [];
-  let tempValues: Array<number> = [];
   let chartLabels: Array<string> = [];
   let ctx;
-  let chartCanvas;
+  let popValues: Array<number> = [];
+  let tempValues: Array<number> = [];
 
   hourlyData.forEach(object => {
     // ! Time

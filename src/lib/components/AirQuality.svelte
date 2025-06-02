@@ -1,5 +1,6 @@
 <script lang="ts">
-  import DataBlock from '../templates/DataBlock.svelte'
+  import DataBlock from '../templates/DataBlock.svelte';
+  
   export let aqi: number = 0;
 
   let airQuality: string;

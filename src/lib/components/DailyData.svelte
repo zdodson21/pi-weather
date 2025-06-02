@@ -3,8 +3,8 @@
   import type { Daily } from '../types/Daily'
 
   export let dailyData: Daily = [];
-  export let monthDay: boolean = false; // 'month day' instead of 'day month' (ex: May 1 instead of 1 May)
   export let icon: string = '01d';
+  export let monthDay: boolean = false; // 'month day' instead of 'day month' (ex: May 1 instead of 1 May)
   let iconAlt: string = 'alt text';
 
   dailyData.forEach(object => {
