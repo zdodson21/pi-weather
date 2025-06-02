@@ -7,8 +7,9 @@
   export let twelveHourTime: boolean = false;
 
   let chartData;
-  let chartValues = [];
-  let chartLabels = [];
+  let popValues: Array<number> = [];
+  let tempValues: Array<number> = [];
+  let chartLabels: Array<string> = [];
   let ctx;
   let chartCanvas;
 
@@ -27,30 +28,97 @@
         object.time -= 12;
         object.halfOfDay = 'PM';
       }
+
+      chartLabels.push(`${object.time} ${object.halfOfDay}`);
+    } else {
+      chartLabels.push(`${object.time}:00`);
     }
 
     // ! Probability of Precipitation
     object.precipitation = object.precipitation * 100;
-    chartValues.push(object.precipitation);
-    if (twelveHourTime) {
-      chartLabels.push(`${object.time} ${object.halfOfDay}`)
-    } else {
-      chartLabels.push(`${object.time}:00`);
-    }
+    popValues.push(object.precipitation);
+
+    // ! Temperature
+    tempValues.push(Math.round(object.temp));
   });
 
   onMount(async (promise) => {
     ctx = chartCanvas.getContext('2d');
     let chart = new Chart(ctx, {
-      type: 'bar',
       data: {
-          labels: chartLabels,
-          datasets: [{
-              label: "Rain",
-              backgroundColor: 'rgb(255, 99, 132)',
-              borderColor: 'rgb(255, 99, 132)',
-              data: chartValues
-          }]
+        datasets: [
+          {
+            type: 'line',
+            backgroundColor: '#ffcc63',
+            borderColor: '#ffcc63',
+            data: tempValues,
+            yAxisID: 'temperature'
+          },
+          {
+            type: 'bar',
+            backgroundColor: '#00a1e7',
+            data: popValues,
+            yAxisID: 'precipitation'
+          },
+        ],
+        labels: chartLabels,
+      },
+      options: {
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          x: {
+            grid: {
+              display: false
+            },
+            border: {
+              display: false
+            }
+          },
+          precipitation: {
+            type: 'linear',
+            position: 'right',
+            min: 0,
+            max: 100,
+            grid: {
+              display: false
+            },
+            border: {
+              display: false
+            },
+            ticks: {
+              callback: function(value) {
+                if (value === 0 || value === 100) {
+                  return `${value}%`;
+                }
+                return '';
+              }
+            }
+          },
+          temperature: {
+            type: 'linear',
+            position: 'left',
+            grid: {
+              display: false
+            },
+            border: {
+              display: false
+            },
+            ticks: {
+              callback: function (value, index, values) {
+                const MIN = 2 * Math.floor(Math.min(...tempValues) / 2);
+                const MAX = 2 * Math.round(Math.max(...tempValues) / 2);
+                if (value === MIN || value === MAX) {
+                  return `${value}°`;
+                }
+                return '';
+              }
+            }
+          }
+        }
       }
     });
   });

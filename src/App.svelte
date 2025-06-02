@@ -202,7 +202,9 @@
       </div>
     </div>
 
-    <HourlyData hourlyData={hourly} twelveHourTime/>
+    <div class="bottom"> 
+      <HourlyData hourlyData={hourly} twelveHourTime/>
+    </div>
 
   {:catch error}
     <div class="error">Error loading weather data: {error.message}</div>
@@ -210,6 +212,10 @@
 </main>
 
 <style>
+  /* main {
+    height: 100vh;
+  } */
+  
   .dev-mode-message {
     background-color: red;
     color: white;
@@ -218,10 +224,16 @@
 
   .top {
     text-align: center;
+    height: 5%;
   }
 
   .middle {
     display: flex;
     justify-content: center;
+    height: 60%;
+  }
+
+  .bottom {
+    height: 35%;
   }
 </style>
