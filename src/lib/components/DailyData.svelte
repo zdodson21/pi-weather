@@ -174,5 +174,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    height: auto;
   }
 </style>

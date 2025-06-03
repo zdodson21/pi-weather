@@ -24,5 +24,6 @@
     border-radius: 12px;
     padding: 4px;
     width: 15%;
+    height: auto;
   }
 </style>
