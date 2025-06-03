@@ -241,11 +241,13 @@
     background-color: red;
     color: white;
     text-align: center;
+    align-content: center;
+    height: 24px;
   }
 
   .contents {
     padding: 8px;
-    height: 100%;
+    /* height: calc(100% - 40px); */
   }
 
   .top {
@@ -268,6 +270,5 @@
     height: auto;
   }
   .bottom {
-
   }
 </style>
