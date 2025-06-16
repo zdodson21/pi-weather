@@ -6,3 +6,9 @@
 <div class="location-wrapper">
   <p>{name}, {state}</p>
 </div>
+
+<style>
+  p {
+    font-weight: bold;
+  }
+</style>

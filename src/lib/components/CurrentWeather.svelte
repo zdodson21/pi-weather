@@ -98,6 +98,12 @@
 </div>
 
 <style>
+  .weather {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
   .top {
     display: flex;
     flex-direction: row;
